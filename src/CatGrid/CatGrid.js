@@ -1,35 +1,57 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+
+import CatFilter from '../CatFilter/CatFilter'
 import CatTable from '../CatTable/CatTable'
+
+import { getCats, getBreeds } from '../services/muscat'
 
 class CatGrid extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			cats: []
+			cats: [],
+			breeds: [],
+			location: ''
 		}
+
+		this.getCats = getCats.bind(this)
+		this.getBreeds = getBreeds.bind(this)
+
+		this.handleChange = this.handleChange.bind(this)
+		this.handleLocation = this.handleLocation.bind(this)
 	}
 
 	componentDidMount() {
-		axios
-			.get(`http://localhost:3001/api/cats`)
-			.then(res => {
-				this.setState(
-					{
-						cats: res.data
-					},
-					() => {
-						console.log(this.state)
-					}
-				)
-			})
-			.catch(err => console.log(err))
+		this.getCats()
+		this.getBreeds()
+	}
+
+	setFilter() {
+		this.setState({})
+	}
+
+	handleChange(e) {
+		console.log(e.target.value)
+
+		this.setState({
+			location: e.target.value
+		})
+	}
+
+	handleLocation() {
+		console.log('submit location')
+		console.log(this.state.location)
 	}
 
 	render() {
 		let catPhoto = cat => cat['@size'] === 'x' && cat['@id'] === '1'
+		// let catPhoto = cat => cat['@size'] === 'fpm' && cat['@id'] === '1'
+
 		let isAltered = cat => cat.$t === 'altered'
 		let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
 		let isHouseTrained = cat => cat.$t === 'houseTrained'
@@ -37,6 +59,25 @@ class CatGrid extends Component {
 		let badWithKids = cat => cat.$t === 'noKids'
 		let badWithCats = cat => cat.$t === 'noCats'
 		let badWithDogs = cat => cat.$t === 'noDogs'
+
+		let catAges = ['Kitten', 'Young', 'Adult', 'Senior']
+		let catGenders = ['Male', 'Female']
+		let catSpecialNeeds = ['Yes', 'No']
+
+		// TEST AGES
+		let ages = this.state.cats
+			.map(cat => cat.age.$t)
+			.filter((age, index, ages) => ages.indexOf(age) === index)
+		console.log(ages)
+
+		let genders = this.state.cats
+			.map(cat => cat.sex.$t)
+			.filter((gender, index, genders) => genders.indexOf(gender) === index)
+			.map(
+				gender =>
+					gender === 'M' ? 'Male' : gender === 'F' ? 'Female' : 'Unknown'
+			)
+		console.log(genders)
 
 		let cats = this.state.cats.map((cat, index) => {
 			let catBreed = cat.breeds.breed
@@ -93,8 +134,23 @@ class CatGrid extends Component {
 
 		return (
 			<div className="cats">
+				<form>
+					<TextField
+						hintText="Location"
+						floatingLabelText="Location"
+						onChange={this.handleChange}
+					/>
+					<RaisedButton
+						label="Search"
+						style={{ margin: '12px' }}
+						onClick={this.handleLocation}
+					/>
+				</form>
+				<CatFilter filterName={'Breeds'} data={this.state.breeds} />
+				<CatFilter filterName={'Age'} data={catAges} />
+				<CatFilter filterName={'Gender'} data={catGenders} />
+				<CatFilter filterName={'Special Needs?'} data={catSpecialNeeds} />
 				<CatTable cats={this.state.cats} />
-				{cats}
 			</div>
 		)
 	}
