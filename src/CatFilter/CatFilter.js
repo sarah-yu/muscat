@@ -45,7 +45,7 @@ class CatFilter extends Component {
 		const { values } = this.state
 		return (
 			<SelectField
-				multiple={true}
+				multiple={this.props.selectMultiple}
 				hintText={this.props.displayName}
 				floatingLabelText={this.props.displayName}
 				value={values}

@@ -72,6 +72,11 @@ class CatList extends Component {
 			console.log(':::::THE FILTERED CATS:::::')
 			console.log(filteredCats)
 			console.log(':::::::::::::::::::::::::::')
+
+			// no cats found
+			if (filteredCats.length === 0) {
+				console.log('no cats matching your criteria')
+			}
 		})
 	}
 
@@ -85,6 +90,27 @@ class CatList extends Component {
 					return true
 				}
 
+				// handle breeds filter
+				if (eachKey === 'breed') {
+					if (eachCat.breeds.breed.length) {
+						return false
+					} else {
+						return filters[eachKey].includes(eachCat['breeds']['breed']['$t'])
+					}
+				}
+
+				// handle specialNeeds filter
+				if (eachKey === 'specialNeeds') {
+					let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
+
+					if (this.state.filter.specialNeeds === 'Yes') {
+						return eachCat['options']['option'].find(hasSpecialNeeds)
+					} else {
+						return !eachCat['options']['option'].find(hasSpecialNeeds)
+					}
+				}
+
+				// handle other filters
 				return filters[eachKey].includes(eachCat[eachKey]['$t'])
 			})
 		})
@@ -124,24 +150,28 @@ class CatList extends Component {
 					displayName={'Breeds'}
 					data={this.state.breeds}
 					handleFilter={this.handleFilter}
+					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'age'}
 					displayName={'Age'}
 					data={catAges}
 					handleFilter={this.handleFilter}
+					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'sex'}
 					displayName={'Gender'}
 					data={catGenders}
 					handleFilter={this.handleFilter}
+					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'specialNeeds'}
 					displayName={'Special Needs?'}
 					data={catSpecialNeeds}
 					handleFilter={this.handleFilter}
+					selectMultiple={false}
 				/>
 				<CatTable cats={this.state.cats} />
 			</div>
