@@ -16,7 +16,9 @@ class CatList extends Component {
 			cats: [],
 			breeds: [],
 			location: '',
-			filter: {}
+			filter: {},
+			filtering: false,
+			filteredCats: []
 		}
 
 		this.getCats = getCats.bind(this)
@@ -66,18 +68,34 @@ class CatList extends Component {
 
 		console.log(filter)
 
-		this.setState({ filter }, () => {
-			let filteredCats = this.filterCats(this.state.cats, this.state.filter)
+		this.setState(
+			{
+				filter,
+				filtering: true
+			},
+			() => {
+				let filteredCats = this.filterCats(this.state.cats, this.state.filter)
 
-			console.log(':::::THE FILTERED CATS:::::')
-			console.log(filteredCats)
-			console.log(':::::::::::::::::::::::::::')
+				console.log('are we filtering?')
+				console.log(this.state.filtering)
 
-			// no cats found
-			if (filteredCats.length === 0) {
-				console.log('no cats matching your criteria')
+				console.log(':::::THE FILTERED CATS:::::')
+				console.log(filteredCats)
+				console.log(':::::::::::::::::::::::::::')
+
+				// no cats found
+				if (filteredCats.length === 0) {
+					console.log('no cats matching your criteria')
+				}
+
+				this.setState(
+					{
+						filteredCats: filteredCats
+					},
+					() => console.log(this.state.filteredCats)
+				)
 			}
-		})
+		)
 	}
 
 	filterCats = (catsArr, filters) => {
@@ -93,7 +111,11 @@ class CatList extends Component {
 				// handle breeds filter
 				if (eachKey === 'breed') {
 					if (eachCat.breeds.breed.length) {
-						return false
+						return (
+							eachCat.breeds.breed
+								.map(breed => breed.$t)
+								.indexOf(filters[eachKey][0]) !== -1
+						)
 					} else {
 						return filters[eachKey].includes(eachCat['breeds']['breed']['$t'])
 					}
@@ -126,10 +148,6 @@ class CatList extends Component {
 		let catGenders = this.state.cats
 			.map(cat => cat.sex.$t)
 			.filter((gender, index, genders) => genders.indexOf(gender) === index)
-		// .map(
-		// 	gender =>
-		// 		gender === 'M' ? 'Male' : gender === 'F' ? 'Female' : 'Unknown'
-		// )
 
 		return (
 			<div className="cats">
@@ -173,7 +191,11 @@ class CatList extends Component {
 					handleFilter={this.handleFilter}
 					selectMultiple={false}
 				/>
-				<CatTable cats={this.state.cats} />
+				<CatTable
+					cats={
+						this.state.filtering ? this.state.filteredCats : this.state.cats
+					}
+				/>
 			</div>
 		)
 	}

@@ -20,8 +20,7 @@ const CatTableRow = props => {
 			<TableRowColumn style={{ whiteSpace: 'normal' }}>
 				{catBreed.length
 					? catBreed.map(breed => breed.$t).join(' & ')
-					: catBreed.$t}{' '}
-				{cat.mix.$t === 'yes' ? 'Mix' : ''}
+					: catBreed.$t}
 			</TableRowColumn>
 			<TableRowColumn>{cat.age.$t}</TableRowColumn>
 			<TableRowColumn>{cat.sex.$t}</TableRowColumn>
