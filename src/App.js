@@ -1,9 +1,15 @@
 import React from 'react'
 
-import CatGrid from './CatGrid/CatGrid'
+import Header from './Header/Header'
+import CatList from './CatList/CatList'
 
 import './App.css'
 
-const App = () => <CatGrid />
+const App = () => (
+	<div>
+		<Header />
+		<CatList />
+	</div>
+)
 
 export default App

@@ -4,49 +4,24 @@ import {
 	TableHeader,
 	TableHeaderColumn,
 	TableBody,
-	TableRow,
-	TableRowColumn
+	TableRow
 } from 'material-ui/Table'
 
+import CatTableRow from '../CatTableRow/CatTableRow'
+
 class CatTable extends Component {
-	componentDidUpdate() {
-		console.log('***** CAT TABLE *****')
-		console.log(this.props)
-		console.log('***** CAT TABLE *****')
-	}
-
 	render() {
-		let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
+		let num = 25
 
-		let cats = this.props.cats.map((cat, index) => {
-			let catBreed = cat.breeds.breed
-			let catOptions = cat.options.option
-			let catContact = cat.contact
-
-			return (
-				<TableRow key={index}>
-					<TableRowColumn>{cat.name.$t}</TableRowColumn>
-					<TableRowColumn>
-						{catBreed.length ? catBreed[0].$t : catBreed.$t}
-					</TableRowColumn>
-					<TableRowColumn>{cat.age.$t}</TableRowColumn>
-					<TableRowColumn>{cat.sex.$t}</TableRowColumn>
-					<TableRowColumn>
-						{catOptions.find(hasSpecialNeeds) ? 'Yes' : 'No'}
-					</TableRowColumn>
-					<TableRowColumn>
-						{catContact.city.$t}, {catContact.state.$t}
-					</TableRowColumn>
-					<TableRowColumn>{catContact.phone.$t}</TableRowColumn>
-					<TableRowColumn>{catContact.email.$t}</TableRowColumn>
-				</TableRow>
-			)
+		let cats = this.props.cats.slice(0, num).map((cat, index) => {
+			return <CatTableRow cat={cat} key={index} />
 		})
 
 		return (
 			<Table>
-				<TableHeader>
+				<TableHeader adjustForCheckbox={false} displaySelectAll={false}>
 					<TableRow>
+						<TableHeaderColumn>Photo</TableHeaderColumn>
 						<TableHeaderColumn>Name</TableHeaderColumn>
 						<TableHeaderColumn>Breed</TableHeaderColumn>
 						<TableHeaderColumn>Age</TableHeaderColumn>
@@ -57,7 +32,9 @@ class CatTable extends Component {
 						<TableHeaderColumn>Email</TableHeaderColumn>
 					</TableRow>
 				</TableHeader>
-				<TableBody>{cats}</TableBody>
+				<TableBody showRowHover={true} stripedRows={true}>
+					{cats}
+				</TableBody>
 			</Table>
 		)
 	}
