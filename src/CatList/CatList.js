@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import CatFilter from '../CatFilter/CatFilter'
 import CatTable from '../CatTable/CatTable'
 
-import { getCats, getBreeds } from '../services/muscat'
+import { getCats, getBreeds, getCatsFrom } from '../services/muscat'
 
 class CatList extends Component {
 	constructor(props) {
@@ -23,6 +23,7 @@ class CatList extends Component {
 
 		this.getCats = getCats.bind(this)
 		this.getBreeds = getBreeds.bind(this)
+		this.getCatsFrom = getCatsFrom.bind(this)
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleLocation = this.handleLocation.bind(this)
@@ -33,8 +34,6 @@ class CatList extends Component {
 	componentDidMount() {
 		this.getCats()
 		this.getBreeds()
-
-		console.log(this.state.filteredCats)
 	}
 
 	setFilter() {
@@ -52,21 +51,13 @@ class CatList extends Component {
 
 		console.log('submit location')
 		console.log(this.state.location)
-	}
 
-	handleImageNewInput(e) {
-		e.preventDefault()
-
-		let newImage = this.state.newImage
-		newImage[e.target.name] = e.target.value
-		this.setState({ newImage })
+		this.getCatsFrom(this.state.location)
 	}
 
 	handleFilter(filterName, values) {
 		let filter = this.state.filter
 		filter[filterName] = values
-
-		console.log(filter)
 
 		this.setState(
 			{
@@ -76,35 +67,27 @@ class CatList extends Component {
 			() => {
 				let filteredCats = this.filterCats(this.state.cats, this.state.filter)
 
-				console.log('are we filtering?')
-				console.log(this.state.filtering)
-
-				console.log(':::::THE FILTERED CATS:::::')
-				console.log(filteredCats)
-				console.log(':::::::::::::::::::::::::::')
-
 				// no cats found
 				if (filteredCats.length === 0) {
 					console.log('no cats matching your criteria')
 				}
 
-				this.setState(
-					{
-						filteredCats: filteredCats
-					},
-					() => console.log(this.state.filteredCats)
-				)
+				this.setState({
+					filteredCats: filteredCats
+				})
 			}
 		)
 	}
 
-	filterCats = (catsArr, filters) => {
-		const filterKeys = Object.keys(filters)
+	filterCats = (catsArr, filter) => {
+		const filterKeys = Object.keys(filter)
+
+		console.log(filter)
 
 		return catsArr.filter(eachCat => {
 			return filterKeys.every(eachKey => {
 				// ignore empty filters
-				if (!filters[eachKey].length) {
+				if (!filter[eachKey].length) {
 					return true
 				}
 
@@ -114,10 +97,10 @@ class CatList extends Component {
 						return (
 							eachCat.breeds.breed
 								.map(breed => breed.$t)
-								.indexOf(filters[eachKey][0]) !== -1
+								.indexOf(filter[eachKey][0]) !== -1
 						)
 					} else {
-						return filters[eachKey].includes(eachCat['breeds']['breed']['$t'])
+						return filter[eachKey].includes(eachCat['breeds']['breed']['$t'])
 					}
 				}
 
@@ -125,7 +108,7 @@ class CatList extends Component {
 				if (eachKey === 'specialNeeds') {
 					let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
 
-					if (this.state.filter.specialNeeds === 'Yes') {
+					if (this.state.filter.specialNeeds[0] === 'Yes') {
 						return eachCat['options']['option'].find(hasSpecialNeeds)
 					} else {
 						return !eachCat['options']['option'].find(hasSpecialNeeds)
@@ -133,7 +116,7 @@ class CatList extends Component {
 				}
 
 				// handle other filters
-				return filters[eachKey].includes(eachCat[eachKey]['$t'])
+				return filter[eachKey].includes(eachCat[eachKey]['$t'])
 			})
 		})
 	}
@@ -153,6 +136,7 @@ class CatList extends Component {
 			<div className="cats">
 				<form>
 					<TextField
+						name="location"
 						hintText="Location"
 						floatingLabelText="Location"
 						onChange={this.handleChange}
@@ -168,28 +152,24 @@ class CatList extends Component {
 					displayName={'Breeds'}
 					data={this.state.breeds}
 					handleFilter={this.handleFilter}
-					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'age'}
 					displayName={'Age'}
 					data={catAges}
 					handleFilter={this.handleFilter}
-					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'sex'}
 					displayName={'Gender'}
 					data={catGenders}
 					handleFilter={this.handleFilter}
-					selectMultiple={true}
 				/>
 				<CatFilter
 					filterName={'specialNeeds'}
 					displayName={'Special Needs?'}
 					data={catSpecialNeeds}
 					handleFilter={this.handleFilter}
-					selectMultiple={false}
 				/>
 				<CatTable
 					cats={

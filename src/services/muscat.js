@@ -23,6 +23,22 @@ export function getCats() {
 		.catch(err => console.log(err))
 }
 
+export function getCatsFrom(location) {
+	console.log(location)
+
+	axios
+		.post(`${servicePath}/cats/${location}`)
+		.then(res => {
+			this.setState(
+				{
+					cats: res.data
+				},
+				() => console.log(this.state.cats)
+			)
+		})
+		.catch(err => console.log(err))
+}
+
 export function getBreeds() {
 	axios
 		.get(`${servicePath}/cats/breeds`)
