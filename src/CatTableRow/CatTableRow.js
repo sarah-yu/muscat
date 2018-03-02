@@ -3,36 +3,43 @@ import { TableRow, TableRowColumn } from 'material-ui/Table'
 
 const CatTableRow = props => {
 	let cat = props.cat
-
+	let id = props.cat.id.$t
 	let catBreed = cat.breeds.breed
-	let catOptions = cat.options.option
-	let catContact = cat.contact
+
+	let catOptions
+	if (cat.options.option) {
+		catOptions = cat.options.option
+	}
 
 	let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
 	let catPhoto = cat => cat['@size'] === 'fpm' && cat['@id'] === '1'
 
 	return (
-		<TableRow>
-			<TableRowColumn>
-				<img src={cat.media.photos.photo.find(catPhoto).$t} alt={cat.name.$t} />
+		<TableRow {...props} onRowClick={props.handleCatClick}>
+			<TableRowColumn data-id={id}>
+				{cat.media.photos ? (
+					<img
+						src={cat.media.photos.photo.find(catPhoto).$t}
+						alt={cat.name.$t}
+					/>
+				) : (
+					''
+				)}
 			</TableRowColumn>
-			<TableRowColumn>{cat.name.$t}</TableRowColumn>
-			<TableRowColumn style={{ whiteSpace: 'normal' }}>
+			<TableRowColumn data-id={id}>{cat.name.$t}</TableRowColumn>
+			<TableRowColumn data-id={id} style={{ whiteSpace: 'normal' }}>
 				{catBreed.length
 					? catBreed.map(breed => breed.$t).join(' & ')
 					: catBreed.$t}
 			</TableRowColumn>
-			<TableRowColumn>{cat.age.$t}</TableRowColumn>
-			<TableRowColumn>{cat.sex.$t}</TableRowColumn>
-			<TableRowColumn>
-				{catOptions.find(hasSpecialNeeds) ? 'Yes' : 'No'}
-			</TableRowColumn>
-			<TableRowColumn>
-				{catContact.city.$t}, {catContact.state.$t}
-			</TableRowColumn>
-			<TableRowColumn>{catContact.phone.$t}</TableRowColumn>
-			<TableRowColumn>
-				<a href={'mailto:' + catContact.email.$t}>{catContact.email.$t}</a>
+			<TableRowColumn data-id={id}>{cat.age.$t}</TableRowColumn>
+			<TableRowColumn data-id={id}>{cat.sex.$t}</TableRowColumn>
+			<TableRowColumn data-id={id}>
+				{catOptions
+					? catOptions.length
+						? catOptions.find(hasSpecialNeeds) ? 'Yes' : 'No'
+						: catOptions.$t === 'hasSpecialNeeds' ? 'Yes' : 'No'
+					: 'No'}
 			</TableRowColumn>
 		</TableRow>
 	)

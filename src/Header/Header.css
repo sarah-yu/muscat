@@ -1,0 +1,30 @@
+header {
+	border-bottom: 1px solid #ddd;
+	border-top: 4px solid #00b4ce;
+	padding: 1rem 0;
+}
+
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 auto;
+	width: 90%;
+}
+
+.header-title,
+.header-description {
+	margin: 0;
+}
+
+.header-title {
+	letter-spacing: 0.8px;
+	margin-right: 20px;
+}
+
+.header-description {
+	color: #888;
+	font-size: 12px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}

@@ -1,0 +1,47 @@
+.cat-show {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 80px;
+	background-color: rgba(0, 175, 202, 0.75);
+	border-radius: 3px;
+	padding: 30px;
+}
+
+.cat-show p {
+	margin: 25px 0;
+}
+
+.cat-show-photo,
+.cat-show-details {
+	margin: 20px;
+	width: 50%;
+}
+
+.cat-show-photo img {
+	border-radius: 5px;
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.075);
+}
+
+.cat-show-details {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.075);
+	padding: 40px;
+}
+
+.cat-show-name {
+	margin: 0;
+}
+
+.cat-show-description {
+	line-height: 1.6;
+}
+
+.cat-show-contact {
+	margin-top: 40px;
+}
+
+.cat-show-contact-heading {
+	color: #00abc7;
+}

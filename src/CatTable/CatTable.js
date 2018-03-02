@@ -4,21 +4,40 @@ import {
 	TableHeader,
 	TableHeaderColumn,
 	TableBody,
-	TableRow
+	TableRow,
+	TableRowColumn,
+	TableFooter
 } from 'material-ui/Table'
 
 import CatTableRow from '../CatTableRow/CatTableRow'
 
 class CatTable extends Component {
+	constructor(props) {
+		super(props)
+
+		this.handleCatClick = this.handleCatClick.bind(this)
+	}
+
+	handleCatClick(e) {
+		let catId = e.target.dataset.id
+		this.props.showCat(catId)
+	}
+
 	render() {
-		let num = 25
+		let num = 100
 
 		let cats = this.props.cats.slice(0, num).map((cat, index) => {
-			return <CatTableRow cat={cat} key={index} />
+			return (
+				<CatTableRow
+					cat={cat}
+					key={index}
+					handleCatClick={this.handleCatClick}
+				/>
+			)
 		})
 
 		return (
-			<Table>
+			<Table height={'400px'} fixedHeader={true} fixedFooter={true}>
 				<TableHeader adjustForCheckbox={false} displaySelectAll={false}>
 					<TableRow>
 						<TableHeaderColumn>Photo</TableHeaderColumn>
@@ -27,14 +46,23 @@ class CatTable extends Component {
 						<TableHeaderColumn>Age</TableHeaderColumn>
 						<TableHeaderColumn>Sex</TableHeaderColumn>
 						<TableHeaderColumn>Special Needs</TableHeaderColumn>
-						<TableHeaderColumn>Location</TableHeaderColumn>
-						<TableHeaderColumn>Phone</TableHeaderColumn>
-						<TableHeaderColumn>Email</TableHeaderColumn>
 					</TableRow>
 				</TableHeader>
-				<TableBody showRowHover={true} stripedRows={true}>
-					{cats}
-				</TableBody>
+				<TableBody showRowHover={true}>{cats}</TableBody>
+				<TableFooter>
+					<TableRow>
+						<TableRowColumn
+							className="bold"
+							style={{
+								color: '#00abc7',
+								paddingBottom: '20px',
+								textAlign: 'center'
+							}}
+						>
+							{this.props.cats.length} cats found
+						</TableRowColumn>
+					</TableRow>
+				</TableFooter>
 			</Table>
 		)
 	}

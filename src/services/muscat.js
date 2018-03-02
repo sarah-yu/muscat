@@ -11,14 +11,9 @@ export function getCats() {
 	axios
 		.get(`${servicePath}/cats`)
 		.then(res => {
-			this.setState(
-				{
-					cats: res.data
-				},
-				() => {
-					console.log(this.state.cats)
-				}
-			)
+			this.setState({
+				cats: res.data
+			})
 		})
 		.catch(err => console.log(err))
 }
@@ -47,6 +42,17 @@ export function getBreeds() {
 
 			this.setState({
 				breeds: breeds
+			})
+		})
+		.catch(err => console.log(err))
+}
+
+export function getCat(id) {
+	axios
+		.get(`${servicePath}/cats/${id}`)
+		.then(res => {
+			this.setState({
+				catDetails: res.data
 			})
 		})
 		.catch(err => console.log(err))

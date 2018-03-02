@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
 
 import CatFilter from '../CatFilter/CatFilter'
 import CatTable from '../CatTable/CatTable'
+import CatShow from '../CatShow/CatShow'
 
-import { getCats, getBreeds, getCatsFrom } from '../services/muscat'
+import { getCats, getBreeds, getCatsFrom, getCat } from '../services/muscat'
+
+import './CatList.css'
 
 class CatList extends Component {
 	constructor(props) {
@@ -18,13 +19,19 @@ class CatList extends Component {
 			location: '',
 			filter: {},
 			filtering: false,
-			filteredCats: []
+			filteredCats: [],
+			clearFilter: false,
+			catId: '',
+			catDetails: ''
 		}
 
 		this.getCats = getCats.bind(this)
 		this.getBreeds = getBreeds.bind(this)
 		this.getCatsFrom = getCatsFrom.bind(this)
+		this.getCat = getCat.bind(this)
 
+		this.showCat = this.showCat.bind(this)
+		this.turnOffClearFilter = this.turnOffClearFilter.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.handleLocation = this.handleLocation.bind(this)
 
@@ -36,8 +43,25 @@ class CatList extends Component {
 		this.getBreeds()
 	}
 
-	setFilter() {
-		this.setState({})
+	showCat(id) {
+		this.setState(
+			{
+				catId: id
+			},
+			() => this.getCat(this.state.catId)
+		)
+	}
+
+	turnOffClearFilter() {
+		this.setState(
+			{
+				clearFilter: false
+			}
+			// () => {
+			// 	console.log('turned off clearFilter')
+			// 	console.log(this.state.clearFilter)
+			// }
+		)
 	}
 
 	handleChange(e) {
@@ -51,6 +75,11 @@ class CatList extends Component {
 
 		console.log('submit location')
 		console.log(this.state.location)
+
+		this.setState({
+			filtering: false,
+			clearFilter: true
+		})
 
 		this.getCatsFrom(this.state.location)
 	}
@@ -108,10 +137,29 @@ class CatList extends Component {
 				if (eachKey === 'specialNeeds') {
 					let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
 
-					if (this.state.filter.specialNeeds[0] === 'Yes') {
-						return eachCat['options']['option'].find(hasSpecialNeeds)
+					if (this.state.filter.specialNeeds === 'Yes') {
+						if (
+							eachCat['options']['option'] &&
+							eachCat['options']['option'].length
+						) {
+							return eachCat['options']['option'].find(hasSpecialNeeds)
+						} else if (eachCat['options']['option']) {
+							return hasSpecialNeeds(eachCat['options']['option'])
+						} else {
+							return false
+						}
 					} else {
-						return !eachCat['options']['option'].find(hasSpecialNeeds)
+						// if specialNeeds filter is 'No'
+						if (
+							eachCat['options']['option'] &&
+							eachCat['options']['option'].length
+						) {
+							return !eachCat['options']['option'].find(hasSpecialNeeds)
+						} else if (eachCat['options']['option']) {
+							return !hasSpecialNeeds(eachCat['options']['option'])
+						} else {
+							return true
+						}
 					}
 				}
 
@@ -134,47 +182,59 @@ class CatList extends Component {
 
 		return (
 			<div className="cats">
-				<form>
-					<TextField
-						name="location"
-						hintText="Location"
-						floatingLabelText="Location"
-						onChange={this.handleChange}
+				<CatShow id={this.state.catId} cat={this.state.catDetails} />
+				<div className="cat-filters">
+					<form className="location-filter" onSubmit={this.handleLocation}>
+						<TextField
+							name="location"
+							hintText="21224 or Baltimore, MD"
+							floatingLabelText="Location"
+							onChange={this.handleChange}
+							style={{ width: '200px' }}
+						/>
+					</form>
+					<CatFilter
+						filterName={'breed'}
+						displayName={'Breeds'}
+						data={this.state.breeds}
+						handleFilter={this.handleFilter}
+						clearFilter={this.state.clearFilter}
+						turnOffClearFilter={this.turnOffClearFilter}
+						selectMultiple={true}
 					/>
-					<RaisedButton
-						label="Search"
-						style={{ margin: '12px' }}
-						onClick={this.handleLocation}
+					<CatFilter
+						filterName={'age'}
+						displayName={'Age'}
+						data={catAges}
+						handleFilter={this.handleFilter}
+						clearFilter={this.state.clearFilter}
+						turnOffClearFilter={this.turnOffClearFilter}
+						selectMultiple={true}
 					/>
-				</form>
-				<CatFilter
-					filterName={'breed'}
-					displayName={'Breeds'}
-					data={this.state.breeds}
-					handleFilter={this.handleFilter}
-				/>
-				<CatFilter
-					filterName={'age'}
-					displayName={'Age'}
-					data={catAges}
-					handleFilter={this.handleFilter}
-				/>
-				<CatFilter
-					filterName={'sex'}
-					displayName={'Gender'}
-					data={catGenders}
-					handleFilter={this.handleFilter}
-				/>
-				<CatFilter
-					filterName={'specialNeeds'}
-					displayName={'Special Needs?'}
-					data={catSpecialNeeds}
-					handleFilter={this.handleFilter}
-				/>
+					<CatFilter
+						filterName={'sex'}
+						displayName={'Gender'}
+						data={catGenders}
+						handleFilter={this.handleFilter}
+						clearFilter={this.state.clearFilter}
+						turnOffClearFilter={this.turnOffClearFilter}
+						selectMultiple={true}
+					/>
+					<CatFilter
+						filterName={'specialNeeds'}
+						displayName={'Special Needs?'}
+						data={catSpecialNeeds}
+						handleFilter={this.handleFilter}
+						clearFilter={this.state.clearFilter}
+						turnOffClearFilter={this.turnOffClearFilter}
+						selectMultiple={false}
+					/>
+				</div>
 				<CatTable
 					cats={
 						this.state.filtering ? this.state.filteredCats : this.state.cats
 					}
+					showCat={this.showCat}
 				/>
 			</div>
 		)

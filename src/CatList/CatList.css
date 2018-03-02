@@ -1,0 +1,16 @@
+.cats {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.location-filter {
+	display: inline-block;
+}
+
+.cat-filters {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-around;
+	margin: 40px 0 20px 0;
+}

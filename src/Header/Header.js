@@ -1,9 +1,14 @@
 import React from 'react'
 
+import './Header.css'
+
 const Header = () => (
-	<div>
-		<h1>Placeholder for Header</h1>
-	</div>
+	<header>
+		<div className="header-wrapper">
+			<h1 className="header-title">muscat</h1>
+			<p className="header-description">Find your purrfect friend</p>
+		</div>
+	</header>
 )
 
 export default Header

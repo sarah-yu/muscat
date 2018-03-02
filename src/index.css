@@ -1,10 +1,5 @@
 body {
+	color: #333;
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
-	padding: 30px;
-}
-
-.cat-filter {
-	display: inline-block;
-	margin-right: 30px;
 }
