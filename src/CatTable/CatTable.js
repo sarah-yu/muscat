@@ -20,6 +20,9 @@ class CatTable extends Component {
 
 	handleCatClick(e) {
 		let catId = e.target.dataset.id
+
+		console.log(catId)
+
 		this.props.showCat(catId)
 	}
 

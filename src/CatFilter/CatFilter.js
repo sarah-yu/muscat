@@ -16,20 +16,10 @@ class CatFilter extends Component {
 	}
 
 	clearFilter() {
-		// console.log('clearing the filter!')
-		// console.log('status of this.props.clearFilter')
-		// console.log(this.props.clearFilter)
-
 		if (this.props.clearFilter) {
-			this.setState(
-				{
-					values: []
-				}
-				// () => {
-				// 	console.log('cleared all filter values')
-				// 	console.log(this.state.values)
-				// }
-			)
+			this.setState({
+				values: []
+			})
 
 			this.props.turnOffClearFilter()
 		}
@@ -67,9 +57,6 @@ class CatFilter extends Component {
 		const { values } = this.state
 
 		const styles = {
-			// 	backgroundColor: '#00b4ce',
-			// 	border: '1px solid #00b4ce',
-			// 	borderRadius: '8px',
 			margin: '10px 20px',
 			width: '200px'
 		}

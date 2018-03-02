@@ -2,6 +2,8 @@ import React from 'react'
 import './CatShow.css'
 
 const CatShow = props => {
+	console.log(props)
+
 	let cat
 	if (props.cat) {
 		cat = props.cat
