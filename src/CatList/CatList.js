@@ -5,7 +5,7 @@ import CatFilter from '../CatFilter/CatFilter'
 import CatTable from '../CatTable/CatTable'
 import CatShow from '../CatShow/CatShow'
 
-import { getCats, getBreeds, getCatsFrom, getCat } from '../services/muscat'
+import { getBreeds, getCatsFrom, getCat } from '../services/muscat'
 
 import './CatList.css'
 
@@ -16,7 +16,7 @@ class CatList extends Component {
 		this.state = {
 			cats: [],
 			breeds: [],
-			location: '',
+			location: '21224', // default location
 			filter: {},
 			filtering: false,
 			filteredCats: [],
@@ -25,21 +25,19 @@ class CatList extends Component {
 			catDetails: ''
 		}
 
-		this.getCats = getCats.bind(this)
 		this.getBreeds = getBreeds.bind(this)
 		this.getCatsFrom = getCatsFrom.bind(this)
 		this.getCat = getCat.bind(this)
 
 		this.showCat = this.showCat.bind(this)
 		this.turnOffClearFilter = this.turnOffClearFilter.bind(this)
-		this.handleChange = this.handleChange.bind(this)
-		this.handleLocation = this.handleLocation.bind(this)
-
+		this.changeLocation = this.changeLocation.bind(this)
+		this.submitLocation = this.submitLocation.bind(this)
 		this.handleFilter = this.handleFilter.bind(this)
 	}
 
 	componentDidMount() {
-		this.getCats()
+		this.getCatsFrom(this.state.location)
 		this.getBreeds()
 	}
 
@@ -53,28 +51,19 @@ class CatList extends Component {
 	}
 
 	turnOffClearFilter() {
-		this.setState(
-			{
-				clearFilter: false
-			}
-			// () => {
-			// 	console.log('turned off clearFilter')
-			// 	console.log(this.state.clearFilter)
-			// }
-		)
+		this.setState({
+			clearFilter: false
+		})
 	}
 
-	handleChange(e) {
+	changeLocation(e) {
 		this.setState({
 			location: e.target.value
 		})
 	}
 
-	handleLocation(e) {
+	submitLocation(e) {
 		e.preventDefault()
-
-		console.log('submit location')
-		console.log(this.state.location)
 
 		this.setState({
 			filtering: false,
@@ -184,12 +173,12 @@ class CatList extends Component {
 			<div className="cats">
 				<CatShow id={this.state.catId} cat={this.state.catDetails} />
 				<div className="cat-filters">
-					<form className="location-filter" onSubmit={this.handleLocation}>
+					<form className="location-filter" onSubmit={this.submitLocation}>
 						<TextField
 							name="location"
 							hintText="21224 or Baltimore, MD"
 							floatingLabelText="Location"
-							onChange={this.handleChange}
+							onChange={this.changeLocation}
 							style={{ width: '200px' }}
 						/>
 					</form>

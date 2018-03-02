@@ -7,17 +7,6 @@ if (document.location.hostname === 'localhost') {
 	servicePath = 'https://muscat-service.herokuapp.com/api'
 }
 
-export function getCats() {
-	axios
-		.get(`${servicePath}/cats`)
-		.then(res => {
-			this.setState({
-				cats: res.data
-			})
-		})
-		.catch(err => console.log(err))
-}
-
 export function getCatsFrom(location) {
 	console.log(location)
 
@@ -51,9 +40,12 @@ export function getCat(id) {
 	axios
 		.get(`${servicePath}/cats/${id}`)
 		.then(res => {
-			this.setState({
-				catDetails: res.data
-			})
+			this.setState(
+				{
+					catDetails: res.data
+				},
+				() => console.log(this.state.catDetails)
+			)
 		})
 		.catch(err => console.log(err))
 }
