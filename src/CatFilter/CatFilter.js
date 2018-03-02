@@ -12,17 +12,15 @@ class CatFilter extends Component {
 	}
 
 	componentWillReceiveProps() {
-		this.clearFilter()
+		if (!this.props.filtering) {
+			this.clearFilter()
+		}
 	}
 
 	clearFilter() {
-		if (this.props.clearFilter) {
-			this.setState({
-				values: []
-			})
-
-			this.props.turnOffClearFilter()
-		}
+		this.setState({
+			values: []
+		})
 	}
 
 	handleChange = (e, index, values) => {

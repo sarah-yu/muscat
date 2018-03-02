@@ -5,7 +5,7 @@ import CatFilter from '../CatFilter/CatFilter'
 import CatTable from '../CatTable/CatTable'
 import CatShow from '../CatShow/CatShow'
 
-import { getBreeds, getCatsFrom, getCat } from '../services/muscat'
+import { getBreeds, getCatsFrom, getCat, getShelter } from '../services/muscat'
 
 import './CatList.css'
 
@@ -20,17 +20,18 @@ class CatList extends Component {
 			filter: {},
 			filtering: false,
 			filteredCats: [],
-			clearFilter: false,
+			// below are data needed for cat show component
 			catId: '',
-			catDetails: ''
+			catDetails: '',
+			catShelter: ''
 		}
 
 		this.getBreeds = getBreeds.bind(this)
 		this.getCatsFrom = getCatsFrom.bind(this)
 		this.getCat = getCat.bind(this)
+		this.getShelter = getShelter.bind(this)
 
 		this.showCat = this.showCat.bind(this)
-		this.turnOffClearFilter = this.turnOffClearFilter.bind(this)
 		this.changeLocation = this.changeLocation.bind(this)
 		this.submitLocation = this.submitLocation.bind(this)
 		this.handleFilter = this.handleFilter.bind(this)
@@ -42,17 +43,8 @@ class CatList extends Component {
 	}
 
 	showCat(id) {
-		this.setState(
-			{
-				catId: id
-			},
-			() => this.getCat(this.state.catId)
-		)
-	}
-
-	turnOffClearFilter() {
-		this.setState({
-			clearFilter: false
+		this.setState({ catId: id }, () => {
+			this.getCat(this.state.catId)
 		})
 	}
 
@@ -67,7 +59,7 @@ class CatList extends Component {
 
 		this.setState({
 			filtering: false,
-			clearFilter: true
+			filter: {}
 		})
 
 		this.getCatsFrom(this.state.location)
@@ -99,8 +91,6 @@ class CatList extends Component {
 
 	filterCats = (catsArr, filter) => {
 		const filterKeys = Object.keys(filter)
-
-		console.log(filter)
 
 		return catsArr.filter(eachCat => {
 			return filterKeys.every(eachKey => {
@@ -171,7 +161,11 @@ class CatList extends Component {
 
 		return (
 			<div className="cats">
-				<CatShow id={this.state.catId} cat={this.state.catDetails} />
+				<CatShow
+					id={this.state.catId}
+					cat={this.state.catDetails}
+					shelter={this.state.catShelter}
+				/>
 				<div className="cat-filters">
 					<form className="location-filter" onSubmit={this.submitLocation}>
 						<TextField
@@ -187,8 +181,7 @@ class CatList extends Component {
 						displayName={'Breeds'}
 						data={this.state.breeds}
 						handleFilter={this.handleFilter}
-						clearFilter={this.state.clearFilter}
-						turnOffClearFilter={this.turnOffClearFilter}
+						filtering={this.state.filtering}
 						selectMultiple={true}
 					/>
 					<CatFilter
@@ -196,8 +189,7 @@ class CatList extends Component {
 						displayName={'Age'}
 						data={catAges}
 						handleFilter={this.handleFilter}
-						clearFilter={this.state.clearFilter}
-						turnOffClearFilter={this.turnOffClearFilter}
+						filtering={this.state.filtering}
 						selectMultiple={true}
 					/>
 					<CatFilter
@@ -205,8 +197,7 @@ class CatList extends Component {
 						displayName={'Gender'}
 						data={catGenders}
 						handleFilter={this.handleFilter}
-						clearFilter={this.state.clearFilter}
-						turnOffClearFilter={this.turnOffClearFilter}
+						filtering={this.state.filtering}
 						selectMultiple={true}
 					/>
 					<CatFilter
@@ -214,8 +205,7 @@ class CatList extends Component {
 						displayName={'Special Needs?'}
 						data={catSpecialNeeds}
 						handleFilter={this.handleFilter}
-						clearFilter={this.state.clearFilter}
-						turnOffClearFilter={this.turnOffClearFilter}
+						filtering={this.state.filtering}
 						selectMultiple={false}
 					/>
 				</div>

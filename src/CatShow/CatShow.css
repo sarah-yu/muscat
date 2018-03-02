@@ -35,11 +35,22 @@
 }
 
 .cat-show-description {
+	height: 200px;
 	line-height: 1.6;
+	overflow-y: scroll;
 }
 
 .cat-show-contact {
 	margin-top: 40px;
+}
+
+.cat-show-contact p {
+	margin: 20px 0;
+}
+
+.cat-show-contact .fas {
+	color: #00798e;
+	margin-right: 20px;
 }
 
 .cat-show-contact-heading {

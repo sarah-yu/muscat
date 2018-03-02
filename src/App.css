@@ -1,5 +1,14 @@
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #666;
+}
+
 hr {
-	color: #ddd;
+	border: 1px solid #ddd;
 }
 
 .small {

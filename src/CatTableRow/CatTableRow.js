@@ -22,6 +22,7 @@ class CatTableRow extends Component {
 					{cat.media.photos ? (
 						<img
 							src={cat.media.photos.photo.find(catPhoto).$t}
+							data-id={id}
 							alt={cat.name.$t}
 						/>
 					) : (

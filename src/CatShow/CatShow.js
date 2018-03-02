@@ -2,11 +2,12 @@ import React from 'react'
 import './CatShow.css'
 
 const CatShow = props => {
-	console.log(props)
-
 	let cat
-	if (props.cat) {
+	let shelter
+
+	if (props.cat && props.shelter) {
 		cat = props.cat
+		shelter = props.shelter
 	}
 
 	let hasSpecialNeeds = cat => cat.$t === 'specialNeeds'
@@ -64,11 +65,21 @@ const CatShow = props => {
 						<h3 className="cat-show-contact-heading small bold">
 							{cat.contact ? 'Interested? Contact us!' : ''}
 						</h3>
+						<p className="cat-show-contact-shelter">
+							<i class="fas fa-home fa-fw" />
+							{shelter.name.$t}
+						</p>
+						<p className="cat-show-contact-location">
+							<i class="fas fa-map-marker fa-fw" />
+							{shelter.city.$t}, {shelter.state.$t}
+						</p>
 						<p className="cat-show-contact-email">
-							{cat.contact ? 'Email: ' + cat.contact.email.$t : ''}
+							<i className="fas fa-envelope fa-fw" />
+							<a href={'mailto:' + shelter.email.$t}>{shelter.email.$t}</a>
 						</p>
 						<p className="cat-show-contact-phone">
-							{cat.contact ? 'Phone: ' + cat.contact.phone.$t : ''}
+							<i className="fas fa-phone fa-fw" />
+							{shelter.phone.$t}
 						</p>
 					</div>
 				</div>

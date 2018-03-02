@@ -8,24 +8,19 @@ if (document.location.hostname === 'localhost') {
 }
 
 export function getCatsFrom(location) {
-	console.log(location)
-
 	axios
 		.post(`${servicePath}/cats/${location}`)
 		.then(res => {
-			this.setState(
-				{
-					cats: res.data
-				},
-				() => console.log(this.state.cats)
-			)
+			this.setState({
+				cats: res.data
+			})
 		})
 		.catch(err => console.log(err))
 }
 
 export function getBreeds() {
 	axios
-		.get(`${servicePath}/cats/breeds`)
+		.get(`${servicePath}/breeds`)
 		.then(res => {
 			let breeds = res.data.map(breed => breed.$t)
 
@@ -37,6 +32,8 @@ export function getBreeds() {
 }
 
 export function getCat(id) {
+	let that = this
+
 	axios
 		.get(`${servicePath}/cats/${id}`)
 		.then(res => {
@@ -44,7 +41,28 @@ export function getCat(id) {
 				{
 					catDetails: res.data
 				},
-				() => console.log(this.state.catDetails)
+				() => {
+					let shelterId = this.state.catDetails.shelterId.$t
+					getShelter(shelterId, that)
+				}
+			)
+		})
+		.catch(err => console.log(err))
+}
+
+export function getShelter(id, context) {
+	console.log(id)
+
+	axios
+		.get(`${servicePath}/shelters/${id}`)
+		.then(res => {
+			context.setState(
+				{
+					catShelter: res.data
+				},
+				() => {
+					console.log(context.state.catShelter)
+				}
 			)
 		})
 		.catch(err => console.log(err))
