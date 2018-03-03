@@ -22,6 +22,10 @@ header {
 	margin-right: 20px;
 }
 
+.header-title > a:hover {
+	color: #333;
+}
+
 .header-description {
 	color: #888;
 	font-size: 12px;
