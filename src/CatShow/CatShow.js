@@ -66,11 +66,11 @@ const CatShow = props => {
 							{cat.contact ? 'Interested? Contact us!' : ''}
 						</h3>
 						<p className="cat-show-contact-shelter">
-							<i class="fas fa-home fa-fw" />
+							<i className="fas fa-home fa-fw" />
 							{shelter.name.$t}
 						</p>
 						<p className="cat-show-contact-location">
-							<i class="fas fa-map-marker fa-fw" />
+							<i className="fas fa-map-marker fa-fw" />
 							{shelter.city.$t}, {shelter.state.$t}
 						</p>
 						<p className="cat-show-contact-email">

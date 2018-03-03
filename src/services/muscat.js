@@ -9,7 +9,7 @@ if (document.location.hostname === 'localhost') {
 
 export function getCatsFrom(location) {
 	axios
-		.post(`${servicePath}/cats/${location}`)
+		.get(`${servicePath}/cats/from/${location}`)
 		.then(res => {
 			this.setState({
 				cats: res.data
@@ -51,19 +51,12 @@ export function getCat(id) {
 }
 
 export function getShelter(id, context) {
-	console.log(id)
-
 	axios
 		.get(`${servicePath}/shelters/${id}`)
 		.then(res => {
-			context.setState(
-				{
-					catShelter: res.data
-				},
-				() => {
-					console.log(context.state.catShelter)
-				}
-			)
+			context.setState({
+				catShelter: res.data
+			})
 		})
 		.catch(err => console.log(err))
 }

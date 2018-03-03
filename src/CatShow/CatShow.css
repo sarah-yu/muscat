@@ -1,7 +1,6 @@
 .cat-show {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
 	margin-top: 80px;
 	background-color: rgba(0, 175, 202, 0.75);
 	border-radius: 3px;
@@ -21,6 +20,7 @@
 .cat-show-photo img {
 	border-radius: 5px;
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.075);
+	width: 100%;
 }
 
 .cat-show-details {
@@ -32,6 +32,10 @@
 
 .cat-show-name {
 	margin: 0;
+}
+
+.cat-show-basics {
+	line-height: 1.5;
 }
 
 .cat-show-description {
@@ -55,4 +59,16 @@
 
 .cat-show-contact-heading {
 	color: #00abc7;
+}
+
+@media screen and (max-width: 768px) {
+	.cat-show {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.cat-show-photo,
+	.cat-show-details {
+		width: 80%;
+	}
 }
