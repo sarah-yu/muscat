@@ -14,11 +14,6 @@ With muscat, you can:
 ![muscat screenshot](./public/muscat-show.png)
 
 
-## Why muscat?
-
-I built muscat because cats are the best, and I think every cat deserves a loving home. I included a column indicating whether or not each cat has special needs because [some people](https://www.youtube.com/watch?v=7WN3ohF104s) specialize in taking in these kinds of cats, and I think the people that have it in their hearts to do so are truly amazing.
-
-
 ## Technology & Data
 
 - Data retrieved from the [Petfinder API](https://www.petfinder.com/developers/api-docs)
@@ -34,5 +29,5 @@ I built muscat because cats are the best, and I think every cat deserves a lovin
 
 1. Clone the repo for the back end API [here](https://github.com/sarah-yu/muscat-service) and run ```npm install``` to install all dependencies.
 2. Clone this repo for the front end application and run ```npm install``` to install all dependencies.
-3. Start the Express server by running ```nodemon index.js```.
-4. Start the React app by running ```npm run start```.
+3. Start the back end server by running ```nodemon index.js```.
+4. Start the front end React app by running ```npm run start```.
