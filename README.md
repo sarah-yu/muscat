@@ -14,11 +14,6 @@ With muscat, you can:
 ![muscat screenshot](./public/muscat-show.png)
 
 
-## Why muscat?
-
-I built muscat because cats are the best, and I think every cat deserves a loving home. I included a column indicating whether or not each cat has special needs because [some people](https://www.youtube.com/watch?v=7WN3ohF104s) specialize in taking in these kinds of cats, and I think the people that have it in their hearts to do so are truly amazing.
-
-
 ## Technology & Data
 
 Data
