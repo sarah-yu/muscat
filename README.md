@@ -32,7 +32,7 @@ I built muscat because cats are the best, and I think every cat deserves a lovin
 
 ## Installation
 
-1. Clone the repo for the service layer [here]() and run ```npm install```.
+1. Clone the repo for the service layer [here](https://github.com/sarah-yu/muscat-service) and run ```npm install```.
 2. Clone this repo and run ```npm install```.
 3. Start your Express server by running ```nodemon index.js``` in the service layer directory.
 4. Start the React app by running ```npm run start```.
