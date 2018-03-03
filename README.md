@@ -21,18 +21,59 @@ I built muscat because cats are the best, and I think every cat deserves a lovin
 
 ## Technology & Data
 
-- Data retrieved from the [Petfinder API](https://www.petfinder.com/developers/api-docs)
-- Node.js
-- Express.js
-- React.js
+Data
+- [Petfinder API](https://www.petfinder.com/developers/api-docs)
+
+Back End
+- [Node.js](https://nodejs.org/en/)
+- [Express.js](https://expressjs.com/)
+
+Front End
+- [React.js](https://reactjs.org/)
 - [Material-UI](http://www.material-ui.com/)
+
+Testing & Continuous Integration
 - [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/), [SuperTest](https://github.com/visionmedia/supertest)
-- Travis CI
+- [Travis CI](https://travis-ci.org/)
+
+
+## Why muscat?
+
+I built muscat because cats are the best, and I think every cat deserves a loving home. I included a column indicating whether or not each cat has special needs because [some people](https://www.youtube.com/watch?v=7WN3ohF104s) specialize in taking in these kinds of cats, and I think the people that have it in their hearts to do so are truly amazing.
 
 
 ## Installation
 
-1. Clone the repo for the back end API [here](https://github.com/sarah-yu/muscat-service) and run ```npm install``` to install all dependencies.
-2. Clone this repo for the front end application and run ```npm install``` to install all dependencies.
-3. Start the Express server by running ```nodemon index.js```.
-4. Start the React app by running ```npm run start```.
+A. Make sure you have [Node.js](https://nodejs.org/en/) installed.
+
+B. Back End:
+  1. Clone the repo for [the back end api](https://github.com/sarah-yu/muscat-service).
+  ```
+  git clone git@github.com:sarah-yu/muscat-service.git
+  ```
+
+  2. Use a Node.js package manager, like [npm](https://www.npmjs.com/), to install dependencies.
+  ```
+  npm install
+  ```
+
+  3. Start the server.
+  ```
+  node index.js
+  ```
+
+C. Front End:
+  1. Clone [this](https://github.com/sarah-yu/muscat) repo.
+  ```
+  git clone git@github.com:sarah-yu/muscat.git
+  ```
+
+  2. Install dependencies.
+  ```
+  npm install
+  ```
+
+  3. Start the React app.
+  ```
+  npm start
+  ```
