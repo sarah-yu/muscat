@@ -4,6 +4,8 @@
 
 Find your purrfect friend with muscat! This app shows you cats that are available for adoption and is named after my own cat, Muscat.
 
+See the repo for the back end [here](https://github.com/sarah-yu/muscat-service).
+
 ![muscat screenshot](./public/muscat-home.png)
 
 With muscat, you can:
