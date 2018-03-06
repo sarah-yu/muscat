@@ -4,14 +4,21 @@
 
 Find your purrfect friend with muscat! This app shows you cats that are available for adoption and is named after my own cat, Muscat.
 
-See the repo for the back end [here](https://github.com/sarah-yu/muscat-service).
+This project has two parts:
+1. [RESTful API back end](https://github.com/sarah-yu/muscat-service)
+2. React application front end
+
+Unit tests and integration tests can be found in the back end.
+
 
 ![muscat screenshot](./public/muscat-home.png)
+
 
 With muscat, you can:
 - Search for cats by location (zip code or city, state).
 - Filter by breed, age, gender, and special needs.
 - See more details about each cat, including contact information for those interested in adopting.
+
 
 ![muscat screenshot](./public/muscat-show.png)
 
